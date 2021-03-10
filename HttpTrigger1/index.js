@@ -1,7 +1,7 @@
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
-    context.log("Context: ", JSON.stringify(context));
-    context.log("Request: ", JSON.stringify(req));
+    context.log("Context: ", JSON.stringify(context, null, 2));
+    context.log("Request: ", JSON.stringify(req, null, 2));
 
     context.res = {
         body: {
