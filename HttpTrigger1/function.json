@@ -5,7 +5,6 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "route": "users/{name:alpha?}",
       "methods": [
         "get",
         "post",
