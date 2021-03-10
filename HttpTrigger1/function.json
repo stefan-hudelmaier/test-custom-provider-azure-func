@@ -8,7 +8,9 @@
       "route": "users/{name:alpha?}",
       "methods": [
         "get",
-        "post"
+        "post",
+        "put",
+        "delete"
       ]
     },
     {
