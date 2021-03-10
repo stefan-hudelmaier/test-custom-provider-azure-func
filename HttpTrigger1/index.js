@@ -4,8 +4,7 @@ module.exports = async function (context, req) {
     context.log("Request: ", JSON.stringify(req));
 
     context.res = {
-        body: JSON.stringify(
-            {
+        body: {
                 value: [{
                     name: "Test",
                     properties: {
@@ -17,6 +16,8 @@ module.exports = async function (context, req) {
                         age: 41
                     }
                 }]
-            })
+            }
     };
+
+    context.done();
 }
