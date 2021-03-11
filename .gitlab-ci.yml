@@ -1,0 +1,12 @@
+image: alpine:3
+
+build:
+  script:
+    - apk add --no-cache zip
+    - zip function.zip -r host.json package.json HttpTrigger1
+  artifacts:
+    paths:
+     - function.zip
+    expire_in: 1 year
+
+
