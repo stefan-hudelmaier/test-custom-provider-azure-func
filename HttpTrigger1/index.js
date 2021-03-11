@@ -39,14 +39,14 @@ module.exports = async function (context, req) {
                 id: `${customProviderRequestPath}/Test`,
                 type: 'Microsoft.CustomProviders/resourceProviders/public/users',
                 properties: {
-                    age: 39
+                    age: "39 years"
                 }
             }, {
                 name: "Test2",
                 id: `${customProviderRequestPath}/Test2`,
                 type: 'Microsoft.CustomProviders/resourceProviders/public/users',
                 properties: {
-                    age: 41
+                    age: "41 years"
                 }
             }]
         }
