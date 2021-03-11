@@ -36,11 +36,15 @@ module.exports = async function (context, req) {
         responseBody = {
             value: [{
                 name: "Test",
+                id: `${customProviderRequestPath}/Test`,
+                type: 'Microsoft.CustomProviders/resourceProviders/public/users',
                 properties: {
                     age: 39
                 }
             }, {
                 name: "Test2",
+                id: `${customProviderRequestPath}/Test2`,
+                type: 'Microsoft.CustomProviders/resourceProviders/public/users',
                 properties: {
                     age: 41
                 }
