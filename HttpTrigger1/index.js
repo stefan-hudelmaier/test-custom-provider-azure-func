@@ -4,6 +4,9 @@ module.exports = async function (context, req) {
     context.log("Request: ", JSON.stringify(req, null, 2));
 
     context.res = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: {
                 value: [{
                     name: "Test",
