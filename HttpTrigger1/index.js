@@ -37,14 +37,14 @@ module.exports = async function (context, req) {
             value: [{
                 name: "Test",
                 id: `${customProviderRequestPath}/Test`,
-                type: 'Microsoft.CustomProviders/resourceProviders/public/users',
+                type: 'Microsoft.CustomProviders/resourceProviders/public/sharedAccessPolicies',
                 properties: {
                     age: "39 years"
                 }
             }, {
                 name: "Test2",
                 id: `${customProviderRequestPath}/Test2`,
-                type: 'Microsoft.CustomProviders/resourceProviders/public/users',
+                type: 'Microsoft.CustomProviders/resourceProviders/public/sharedAccessPolicies',
                 properties: {
                     age: "41 years"
                 }
