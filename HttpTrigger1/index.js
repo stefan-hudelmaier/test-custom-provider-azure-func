@@ -1,3 +1,71 @@
+const SHARED_ACCESS_POLICY_TYPE = 'Microsoft.CustomProviders/resourceProviders/public/sharedAccessPolicies';
+const ROOT_TOKEN_TYPE = 'Microsoft.CustomProviders/resourceProviders/public/rootTokens';
+
+const CONNECTION_STRING = "Endpoint=http://sthtest.westeurope.azurecontainer.io/admin;SharedAccessKey=123";
+
+
+function readSharedAccessPolicy(customProviderRequestPath) {
+    return {
+        name: 'Primary',
+        id: `${customProviderRequestPath}`,
+        type: SHARED_ACCESS_POLICY_TYPE,
+        properties: {
+            connectionString: CONNECTION_STRING
+        }
+    }
+}
+
+function readAllSharedAccessPolicies(customProviderRequestPath) {
+    return {
+        value: [{
+            name: "Primary",
+            id: `${customProviderRequestPath}/primary`,
+            type: SHARED_ACCESS_POLICY_TYPE,
+            properties: {
+                connectionString: CONNECTION_STRING
+            }
+        }, {
+            name: "Secondary",
+            id: `${customProviderRequestPath}/secondary`,
+            type: SHARED_ACCESS_POLICY_TYPE,
+            properties: {
+                connectionString: CONNECTION_STRING
+            }
+        }]
+    }
+}
+
+function readRootToken(customProviderRequestPath) {
+    return {
+        name: 'rootToken1',
+        id: `${customProviderRequestPath}`,
+        type: ROOT_TOKEN_TYPE,
+        properties: {
+            value: "rt-123456789"
+        }
+    }
+}
+
+function readAllRootTokens(customProviderRequestPath) {
+    return {
+        value: [{
+            name: "rootToken1",
+            id: `${customProviderRequestPath}/rootToken1`,
+            type: ROOT_TOKEN_TYPE,
+            properties: {
+                value: "rt-123456789"
+            }
+        }, {
+            name: "rootToken2",
+            id: `${customProviderRequestPath}/rootToken2`,
+            type: ROOT_TOKEN_TYPE,
+            properties: {
+                value: "rt-9887654321"
+            }
+        }]
+    }
+}
+
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
     context.log("Context: ", JSON.stringify(context, null, 2));
@@ -22,34 +90,38 @@ module.exports = async function (context, req) {
         context.done;
         return;
     }
-    const isResourceRequest = customProviderRequestPath.split('/').length % 2 === 1;
 
-    let responseBody;
-    if (isResourceRequest) {
-        responseBody = {
-            name: 'Test',
-            properties: {
-                age: 39
-            }
+    const customProviderRequestPathParts = customProviderRequestPath.split('/');
+
+    const isResourceRequest = customProviderRequestPathParts.length % 2 === 1;
+
+    const resourceType = isResourceRequest ? customProviderRequestPathParts[customProviderRequestPathParts.length - 2] : customProviderRequestPathParts[customProviderRequestPathParts.length - 1];
+
+    console.log(`Resource type: ${resourceType}`);
+
+
+    let responseBody = null;
+    if (resourceType === 'sharedAccessPolicies') {
+        if (isResourceRequest) {
+            responseBody = readSharedAccessPolicy(customProviderRequestPath);
+        } else {
+            responseBody = readAllSharedAccessPolicies(customProviderRequestPath)
         }
-    } else {
-        responseBody = {
-            value: [{
-                name: "Test",
-                id: `${customProviderRequestPath}/Test`,
-                type: 'Microsoft.CustomProviders/resourceProviders/public/sharedAccessPolicies',
-                properties: {
-                    age: "39 years"
-                }
-            }, {
-                name: "Test2",
-                id: `${customProviderRequestPath}/Test2`,
-                type: 'Microsoft.CustomProviders/resourceProviders/public/sharedAccessPolicies',
-                properties: {
-                    age: "41 years"
-                }
-            }]
+    } else if (resourceType === 'rootTokens') {
+        if (isResourceRequest) {
+            responseBody = readRootToken(customProviderRequestPath);
+        } else {
+            responseBody = readAllRootTokens(customProviderRequestPath)
         }
+    }
+
+    if (responseBody === null) {
+        context.res = {
+            status: 400,
+            body: `Invalid resource type: ${resourceType}`
+        }
+        context.done;
+        return;
     }
 
     context.res = {
