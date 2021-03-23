@@ -1,7 +1,7 @@
 const SHARED_ACCESS_POLICY_TYPE = 'Microsoft.CustomProviders/resourceProviders/public/sharedAccessPolicies';
 const ROOT_TOKEN_TYPE = 'Microsoft.CustomProviders/resourceProviders/public/rootTokens';
 
-const CONNECTION_STRING = "Endpoint=http://sthtest.westeurope.azurecontainer.io/admin;SharedAccessKey=123";
+const CONNECTION_STRING = "Endpoint=http://subioto.westeurope.azurecontainer.io/admin;SharedAccessKey=123";
 
 
 function readSharedAccessPolicy(customProviderRequestPath) {
@@ -53,7 +53,7 @@ function readAllRootTokens(customProviderRequestPath) {
             id: `${customProviderRequestPath}/rootToken1`,
             type: ROOT_TOKEN_TYPE,
             properties: {
-                value: "rt-123456789"
+                value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJ1cmwiOiJodHRwczovL3N1YmlvdG8uYXp1cmV3ZWJzaXRlcy5jb20vIn0.5-b92mw7twR4_2qG_sX0dI9lJ1sj_L0uGSdJ6aZ0vac"
             }
         }, {
             name: "rootToken2",
