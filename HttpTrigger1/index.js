@@ -53,7 +53,7 @@ function readAllRootTokens(customProviderRequestPath) {
             id: `${customProviderRequestPath}/rootToken1`,
             type: ROOT_TOKEN_TYPE,
             properties: {
-                value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJ1cmwiOiJodHRwczovL3N1YmlvdG8uYXp1cmV3ZWJzaXRlcy5jb20vIn0.5-b92mw7twR4_2qG_sX0dI9lJ1sj_L0uGSdJ6aZ0vac"
+                value: "rt-123456789"
             }
         }, {
             name: "rootToken2",
