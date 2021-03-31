@@ -1,8 +1,14 @@
 const SHARED_ACCESS_POLICY_TYPE = 'Microsoft.CustomProviders/resourceProviders/public/sharedAccessPolicies';
 const ROOT_TOKEN_TYPE = 'Microsoft.CustomProviders/resourceProviders/public/rootTokens';
+const WEBSOCKET_URL_TYPE = 'Microsoft.CustomProviders/resourceProviders/public/websocketUrls';
 
 const CONNECTION_STRING = "Endpoint=http://subioto.westeurope.azurecontainer.io/admin;SharedAccessKey=123";
 
+const {
+    ACI_FQDN,
+} = process.env;
+
+const WEBSOCKET_URL = `https://${ACI_FQDN}`;
 
 function readSharedAccessPolicy(customProviderRequestPath) {
     return {
@@ -66,6 +72,30 @@ function readAllRootTokens(customProviderRequestPath) {
     }
 }
 
+function readWebsocketUrl(customProviderRequestPath) {
+    return {
+        name: 'url',
+        id: `${customProviderRequestPath}`,
+        type: WEBSOCKET_URL_TYPE,
+        properties: {
+            value: WEBSOCKET_URL
+        }
+    }
+}
+
+function readAllWebsocketUrls(customProviderRequestPath) {
+    return {
+        value: [{
+            name: "url",
+            id: `${customProviderRequestPath}/url`,
+            type: WEBSOCKET_URL_TYPE,
+            properties: {
+                value: WEBSOCKET_URL
+            }
+        }]
+    }
+}
+
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
     context.log("Context: ", JSON.stringify(context, null, 2));
@@ -99,7 +129,6 @@ module.exports = async function (context, req) {
 
     console.log(`Resource type: ${resourceType}`);
 
-
     let responseBody = null;
     if (resourceType === 'sharedAccessPolicies') {
         if (isResourceRequest) {
@@ -112,6 +141,12 @@ module.exports = async function (context, req) {
             responseBody = readRootToken(customProviderRequestPath);
         } else {
             responseBody = readAllRootTokens(customProviderRequestPath)
+        }
+    } else if (resourceType === 'websocketUrls') {
+        if (isResourceRequest) {
+            responseBody = readWebsocketUrl(customProviderRequestPath);
+        } else {
+            responseBody = readAllWebsocketUrls(customProviderRequestPath)
         }
     }
 
