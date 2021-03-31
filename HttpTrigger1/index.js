@@ -2,13 +2,12 @@ const SHARED_ACCESS_POLICY_TYPE = 'Microsoft.CustomProviders/resourceProviders/p
 const ROOT_TOKEN_TYPE = 'Microsoft.CustomProviders/resourceProviders/public/rootTokens';
 const WEBSOCKET_URL_TYPE = 'Microsoft.CustomProviders/resourceProviders/public/websocketUrls';
 
-const CONNECTION_STRING = "Endpoint=http://subioto.westeurope.azurecontainer.io/admin;SharedAccessKey=123";
-
 const {
     ACI_FQDN,
 } = process.env;
 
-const WEBSOCKET_URL = `https://${ACI_FQDN}`;
+const WEBSOCKET_URL = `http://${ACI_FQDN}`;
+const CONNECTION_STRING = `Endpoint=http://${ACI_FQDN}/admin;SharedAccessKey=123`;
 
 function readSharedAccessPolicy(customProviderRequestPath) {
     return {
